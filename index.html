@@ -3,817 +3,536 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b18">
-<title>GameHub Ultimate | Play Beyond</title>
-<meta name="description" content="Ontdek GameHub Ultimate: speel arcadegames, race, overleef de arena en verdien XP en achievements.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameHub 3D — Play Beyond</title>
+<meta name="description" content="Ontdek vier 3D-games: Battle Arena, Rocket Racing, Block World en Fall Challenge.">
 <style>
-:root{
- --bg:#080b18;--panel:#11172b;--panel2:#171f38;
- --blue:#49c8ff;--purple:#a76bff;--pink:#ff5fbd;
- --text:#f5f7ff;--muted:#9daac7;--green:#55efaa;
-}
+:root{--bg:#080c18;--panel:#111a2c;--line:#283651;--blue:#53d7ff;--purple:#a18aff;--text:#f5f8ff;--muted:#a8b5d0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
- font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh}
-button,input{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--blue)}
 button:disabled{opacity:.45;cursor:not-allowed}
-.app{min-height:100vh}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:230px;
- background:#0c1021;border-right:1px solid #ffffff12;
- padding:23px 15px;z-index:10;display:flex;flex-direction:column}
-.brand{display:flex;align-items:center;gap:10px;font-weight:1000;
- font-size:20px;margin:0 0 35px 5px;letter-spacing:-.7px}
-.brand-icon{background:linear-gradient(135deg,var(--blue),var(--purple));
- border-radius:12px;padding:9px;box-shadow:0 0 25px #49c8ff30}
-.brand span{color:var(--blue)}
-.nav-label{font-size:10px;letter-spacing:2px;color:#7583a7;
- margin:16px 10px 9px;font-weight:800}
-.nav-button{width:100%;text-align:left;border:0;color:var(--muted);
- background:transparent;padding:12px;border-radius:10px;margin:2px 0;
- display:flex;gap:12px;align-items:center;font-weight:700;transition:.2s}
-.nav-button:hover,.nav-button.active{background:#202944;color:white}
-.nav-button.active{box-shadow:inset 3px 0 var(--blue)}
-.sidebar-bottom{margin-top:auto}
-.side-note{padding:14px;background:linear-gradient(140deg,#162c4a,#211a3f);
- border:1px solid #ffffff15;border-radius:14px;font-size:12px;color:#b7c6e5;line-height:1.6}
-.side-note strong{color:white}
-.main{margin-left:230px;padding:25px 30px 60px;max-width:1700px}
-.topbar{display:flex;justify-content:space-between;align-items:center;
- gap:15px;margin-bottom:25px}
-.search{background:var(--panel);border:1px solid #ffffff15;border-radius:12px;
- padding:12px 15px;display:flex;gap:10px;align-items:center;width:min(390px,100%)}
-.search input{background:none;border:0;outline:none;color:white;width:100%;min-width:0}
-.search input::placeholder{color:#7886a6}
-.top-actions{display:flex;gap:10px;align-items:center}
-.pill{background:var(--panel);border:1px solid #ffffff15;border-radius:12px;
- padding:10px 13px;font-weight:800;font-size:13px}
-.pill b{color:#ffe16b}
-.avatar{width:39px;height:39px;border-radius:12px;
- display:grid;place-items:center;background:linear-gradient(135deg,#49c8ff,#a76bff);
- font-size:20px}
-.page{display:none;animation:fadein .25s ease}
-.page.active{display:block}
-@keyframes fadein{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hero{min-height:290px;border:1px solid #ffffff18;border-radius:24px;
- padding:34px;position:relative;overflow:hidden;
- background:radial-gradient(ellipse at 82% 15%,#814aff7a,transparent 34%),
- radial-gradient(ellipse at 70% 90%,#1676b77a,transparent 40%),
- linear-gradient(115deg,#172445,#101329 70%);display:flex;align-items:center}
-.hero:after{content:"";position:absolute;width:280px;height:280px;
- right:9%;top:10px;border-radius:50%;
- border:1px solid #ffffff1c;box-shadow:0 0 0 35px #ffffff06,0 0 0 70px #ffffff04}
-.hero-copy{position:relative;z-index:1;max-width:600px}
-.eyebrow{color:var(--blue);font-size:11px;letter-spacing:2px;font-weight:900}
-.hero h1{font-size:clamp(36px,5vw,61px);line-height:1.03;
- letter-spacing:-2px;margin:15px 0}
-.gradient-text{background:linear-gradient(90deg,#69d8ff,#c49bff,#ff83d1);
- -webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{color:#b6c4e0;line-height:1.7;max-width:490px}
-.primary,.secondary{border:0;border-radius:11px;padding:13px 18px;font-weight:900;transition:.2s}
-.primary{background:linear-gradient(100deg,var(--blue),#8c8bff);color:#091125;
- box-shadow:0 5px 22px #49c8ff24}
-.secondary{background:#202b47;color:white;border:1px solid #ffffff18}
-.primary:hover,.secondary:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
-.hero-art{position:absolute;right:10%;font-size:clamp(70px,12vw,140px);
- filter:drop-shadow(0 20px 20px #0007);transform:rotate(-10deg);opacity:.95}
-.section-head{display:flex;justify-content:space-between;align-items:center;
- gap:12px;margin:30px 0 16px}
-.section-head h2{font-size:21px;margin:0;letter-spacing:-.5px}
-.section-head p{color:var(--muted);font-size:12px;margin:5px 0 0}
-.text-button{background:none;border:0;color:var(--blue);font-weight:800}
-.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:20px}
-.stat{background:var(--panel);border:1px solid #ffffff12;border-radius:15px;padding:17px}
-.stat-icon{font-size:22px}
-.stat-label{font-size:12px;color:var(--muted);margin-top:12px}
-.stat-value{font-size:25px;font-weight:950;margin-top:5px}
-.stat-foot{font-size:11px;color:var(--green);margin-top:5px}
+header{height:68px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 5%;background:#0b1120;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.logo{font-weight:1000;font-size:21px;letter-spacing:-1px}
+.logo span{color:var(--blue)}
+.header-right{display:flex;align-items:center;gap:10px}
+.coins{background:#1b2740;border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-weight:800}
+main{max-width:1450px;margin:auto;padding:28px 24px 60px}
+.hero{position:relative;overflow:hidden;border:1px solid #ffffff1a;border-radius:24px;padding:38px;background:radial-gradient(circle at 80% 35%,#6348bd77,transparent 30%),linear-gradient(120deg,#142a4c,#101328 70%);min-height:300px;display:flex;align-items:center}
+.hero-copy{position:relative;z-index:1;max-width:620px}
+.eyebrow{color:var(--blue);font-weight:900;letter-spacing:2px;font-size:11px}
+h1{font-size:clamp(38px,6vw,70px);line-height:1;letter-spacing:-3px;margin:16px 0}
+.gradient{background:linear-gradient(90deg,#55e0ff,#c0a3ff,#ff7bc8);color:transparent;background-clip:text}
+.hero p,.muted{color:var(--muted);line-height:1.7}
+.hero-art{position:absolute;right:9%;font-size:clamp(85px,15vw,180px);filter:drop-shadow(0 20px 25px #0008)}
+.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:900;transition:.15s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.primary{background:linear-gradient(100deg,#53d7ff,#a18aff);color:#09111e}
+.secondary{background:#202d48;color:white;border:1px solid #ffffff18}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 32px}
+.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:17px}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:25px;margin-top:6px}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 15px}
+.section-title h2{font-size:22px;margin:0}
 .game-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.game-card{background:var(--panel);border:1px solid #ffffff13;border-radius:17px;
- overflow:hidden;transition:transform .2s,border-color .2s;min-width:0}
-.game-card:hover{transform:translateY(-4px);border-color:#49c8ff70}
-.game-art{height:150px;display:grid;place-items:center;font-size:66px;
- position:relative;overflow:hidden}
-.game-art:before,.game-art:after{content:"";position:absolute;border-radius:50%;
- border:1px solid #ffffff2c;width:140px;height:140px}
-.game-art:after{width:200px;height:200px}
-.art-arena{background:radial-gradient(circle at 70% 25%,#ffbb5580,transparent 35%),linear-gradient(140deg,#13547c,#342d70)}
-.art-runner{background:radial-gradient(circle at 50% 40%,#f15ab966,transparent 35%),linear-gradient(140deg,#351c66,#102e5c)}
-.art-space{background:radial-gradient(circle at 50% 40%,#4dcfff55,transparent 38%),linear-gradient(140deg,#080e2e,#3c246e)}
-.art-racer{background:radial-gradient(circle at 50% 70%,#ffbb5555,transparent 40%),linear-gradient(140deg,#6c214e,#242354)}
-.game-emoji{position:relative;z-index:1;filter:drop-shadow(0 10px 10px #0008)}
-.game-content{padding:15px}
-.game-content h3{font-size:16px;margin:0 0 7px}
-.game-content p{font-size:12px;line-height:1.6;color:var(--muted);min-height:38px;margin:0 0 12px}
-.game-meta{display:flex;justify-content:space-between;align-items:center;gap:5px;font-size:11px;color:#aebcdc}
-.tag{border-radius:6px;padding:5px 7px;background:#202b47;color:#a6dfff;font-weight:800}
-.play-small{margin-top:13px;width:100%;border:1px solid #ffffff17;
- background:#202b47;color:white;border-radius:9px;padding:10px;font-weight:850}
-.play-small:hover{background:#2b3b60}
-.activity-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:15px;margin-top:22px}
-.box{background:var(--panel);border:1px solid #ffffff12;border-radius:16px;padding:20px;min-width:0}
-.box h3{margin:0 0 17px;font-size:16px}
-.challenge{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #ffffff10}
-.challenge-icon{width:43px;height:43px;display:grid;place-items:center;
- border-radius:11px;background:#212b48;font-size:21px}
-.challenge-text{flex:1;font-size:12px;color:var(--muted);line-height:1.5}
-.challenge-text strong{display:block;color:white;font-size:13px}
-.progress{height:6px;background:#2b3650;border-radius:8px;overflow:hidden;margin-top:8px}
-.progress div{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple))}
-.activity-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #ffffff0c}
-.activity-row:last-child{border:0}
-.activity-icon{font-size:22px}
-.activity-row div:nth-child(2){flex:1;font-size:13px;font-weight:750}
-.activity-row small{display:block;color:var(--muted);font-weight:400;margin-top:4px}
-.activity-row b{font-size:12px;color:#ffe16b}
-.page-title{font-size:31px;letter-spacing:-1px;margin:10px 0}
-.page-subtitle{color:var(--muted);line-height:1.7;margin-bottom:25px}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.filter-btn{background:var(--panel);color:#b9c6df;border:1px solid #ffffff13;
- border-radius:9px;padding:9px 13px;font-size:12px;font-weight:800}
-.filter-btn.active{background:#23304d;color:var(--blue);border-color:#49c8ff70}
-.empty-state{display:none;padding:40px;text-align:center;color:var(--muted)}
-/* Game screen */
-#gamePage{position:fixed;inset:0;z-index:30;background:#050914;display:none}
-#gamePage.active{display:flex;flex-direction:column}
-.game-top{height:62px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
- padding:0 18px;background:#0c1123;border-bottom:1px solid #ffffff17;gap:12px}
-.game-top strong{font-size:15px}
-.game-top-actions{display:flex;gap:8px}
-.game-top button{padding:9px 12px;border-radius:8px;background:#202b47;color:white;border:1px solid #ffffff15}
-#stage{position:relative;flex:1;min-height:0;overflow:hidden;background:#0a1430}
-#gameCanvas{width:100%;height:100%;display:block;touch-action:none}
-.game-hud{position:absolute;inset:0;pointer-events:none;padding:15px;display:flex;
- justify-content:space-between;align-items:flex-start}
-.hud-panel{background:#091126cf;border:1px solid #ffffff25;border-radius:12px;
- padding:11px 14px;font-size:13px;line-height:1.7}
-.hud-panel b{color:#ffe16b}
-#gameMessage{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%);
- text-align:center;font-weight:1000;font-size:clamp(22px,4vw,42px);
- text-shadow:0 4px 20px #000;pointer-events:none;white-space:pre-line}
-#gameMessage small{font-size:14px;display:block;color:#d5e4ff;margin-top:10px}
-#gameControls{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
- background:#091126c9;border:1px solid #ffffff20;border-radius:10px;
- padding:8px 12px;color:#d1def7;font-size:11px;text-align:center;max-width:95%}
-.game-footer{height:45px;flex-shrink:0;background:#0c1123;display:flex;align-items:center;
- justify-content:space-between;padding:0 18px;color:var(--muted);font-size:11px;gap:10px}
-.mobile-controls{position:absolute;bottom:62px;left:15px;right:15px;
- display:none;justify-content:space-between;pointer-events:none}
-.touch-group{display:flex;gap:7px}
-.touch-btn{pointer-events:auto;border:1px solid #ffffff55;background:#101b32bb;
- color:white;width:55px;height:55px;border-radius:15px;font-weight:900;
- touch-action:none;user-select:none}
-.profile-hero{display:flex;gap:20px;align-items:center;padding:25px;
- background:linear-gradient(120deg,#162749,#25183f);border-radius:18px;
- border:1px solid #ffffff16;margin-bottom:20px}
-.big-avatar{width:85px;height:85px;border-radius:23px;display:grid;place-items:center;
- font-size:43px;background:linear-gradient(135deg,#49c8ff,#a76bff)}
-.profile-hero h2{margin:0 0 7px}.profile-hero p{color:var(--muted);margin:0 0 10px}
-.xp-track{height:8px;background:#303955;border-radius:10px;overflow:hidden;max-width:350px}
-.xp-track div{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple))}
-.achievement-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.achievement{padding:17px;border:1px solid #ffffff13;background:var(--panel);border-radius:13px}
-.achievement .emoji{font-size:28px}.achievement h4{margin:12px 0 6px}
-.achievement p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
-.achievement.locked{opacity:.48}
-.settings-row{display:flex;justify-content:space-between;align-items:center;gap:20px;
- padding:15px 0;border-bottom:1px solid #ffffff10}
-.settings-row:last-child{border:0}
-.settings-row p{color:var(--muted);font-size:12px;margin:5px 0 0}
-.toggle{width:48px;height:27px;border-radius:20px;border:0;background:#35405b;position:relative}
-.toggle:after{content:"";position:absolute;left:4px;top:4px;width:19px;height:19px;
- border-radius:50%;background:white;transition:.2s}
-.toggle.on{background:#3abf91}
-.toggle.on:after{left:25px}
-.toast{position:fixed;right:20px;bottom:20px;background:#172746;border:1px solid #49c8ff66;
- padding:13px 17px;border-radius:12px;z-index:60;box-shadow:0 10px 40px #0008;
- animation:fadein .2s}
-.footer{color:#647292;font-size:11px;text-align:center;padding:35px 0 5px}
-@media(max-width:1150px){.game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-art{right:4%;opacity:.55}}
-@media(max-width:760px){
- .sidebar{width:65px;padding:15px 7px}
- .brand{font-size:0;margin:0 auto 25px}.brand-icon{font-size:17px}
- .nav-label{font-size:0;margin:13px 0}
- .nav-button{justify-content:center;padding:13px 5px;font-size:0}
- .nav-button .nav-icon{font-size:20px}
- .sidebar-bottom{display:none}
- .main{margin-left:65px;padding:18px 13px 35px}
- .topbar{align-items:stretch}.search{width:100%;padding:10px}
- .top-actions{gap:5px}.pill{padding:9px;font-size:11px}
- .avatar{display:none}.hero{padding:23px;min-height:310px}
- .hero-art{right:-5%;top:10%;opacity:.22}
- .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- .stat{padding:12px}.stat-value{font-size:22px}
- .game-grid{gap:9px}.game-art{height:105px;font-size:48px}
- .game-content{padding:11px}.game-content p{font-size:11px}
- .activity-grid{grid-template-columns:1fr}
- .achievement-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .profile-hero{padding:17px;gap:12px}.big-avatar{width:60px;height:60px;font-size:30px}
- #gameControls{bottom:8px}.game-footer{font-size:9px;padding:0 8px}
-}
-@media(max-width:430px){
- .game-grid{grid-template-columns:1fr 1fr}
- .game-art{height:95px}.game-content h3{font-size:14px}
- .game-meta{font-size:10px}.hero h1{font-size:38px}
- .top-actions .pill:first-child{display:none}
- .achievement-grid{grid-template-columns:1fr 1fr}
+.game-card{border:1px solid var(--line);background:var(--panel);border-radius:17px;overflow:hidden;transition:.2s}
+.game-card:hover{transform:translateY(-4px);border-color:var(--blue)}
+.card-art{height:165px;display:grid;place-items:center;font-size:67px;position:relative;overflow:hidden}
+.card-art:before{content:"";position:absolute;width:180px;height:180px;border:1px solid #ffffff26;border-radius:50%;box-shadow:0 0 0 25px #ffffff08,0 0 0 50px #ffffff05}
+.card-art span{z-index:1;filter:drop-shadow(0 12px 12px #0008)}
+.battle{background:linear-gradient(140deg,#1c927e,#27518e 60%,#35245e)}
+.racing{background:linear-gradient(140deg,#9b3e55,#3b2a76)}
+.blocks{background:linear-gradient(140deg,#237f55,#254f9e)}
+.fall{background:linear-gradient(140deg,#e76a8d,#5540a9)}
+.card-body{padding:15px}
+.card-body h3{margin:0 0 8px}
+.card-body p{font-size:12px;color:var(--muted);line-height:1.6;min-height:57px}
+.card-foot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}
+.tag{background:#243650;color:#a9eaff;padding:5px 8px;border-radius:6px;font-weight:800}
+.card-body .btn{width:100%;margin-top:13px}
+#gameScreen{display:none;position:fixed;inset:0;background:#060912;z-index:20}
+#gameScreen.open{display:flex;flex-direction:column}
+.game-header{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 15px;background:#0b1120;border-bottom:1px solid var(--line);gap:10px}
+.game-header strong{font-size:14px}
+.game-header button{background:#202d48;border:1px solid #ffffff18;color:white;border-radius:8px;padding:9px 12px}
+#viewport{position:relative;flex:1;min-height:0}
+#viewport canvas{display:block;width:100%;height:100%;touch-action:none}
+.hud{position:absolute;left:14px;top:14px;right:14px;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
+.hud-box{background:#091126dc;border:1px solid #ffffff2b;border-radius:10px;padding:10px 13px;font-size:12px;line-height:1.7}
+.hud-box b{color:#ffe36b}
+#overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;pointer-events:none;padding:20px}
+#overlay .message{padding:22px;background:#0a1122d9;border:1px solid #ffffff26;border-radius:15px;max-width:420px}
+#overlay h2{font-size:clamp(24px,4vw,40px);margin:0 0 10px}
+#overlay p{color:#cfdaef;line-height:1.6}
+#overlay button{pointer-events:auto}
+.controls{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#091126d9;border:1px solid #ffffff25;border-radius:10px;padding:9px 13px;color:#e1eaff;font-size:11px;text-align:center;max-width:95%;white-space:normal}
+.mobile-pad{display:none;position:absolute;bottom:58px;left:12px;right:12px;justify-content:space-between;pointer-events:none}
+.pad-group{display:flex;gap:7px}
+.pad-button{pointer-events:auto;width:52px;height:52px;border:1px solid #ffffff60;border-radius:14px;background:#111e37d9;color:white;font-weight:900;touch-action:none}
+.game-footer{height:35px;background:#0b1120;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:10px;color:var(--muted)}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:28px}
+.info-grid h3{margin-top:0}
+.info-grid p,.info-grid li{font-size:13px;color:var(--muted);line-height:1.8}
+.toast{position:fixed;z-index:40;bottom:20px;right:20px;background:#192946;border:1px solid var(--blue);padding:14px;border-radius:10px}
+@media(max-width:1050px){.game-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){
+ header{padding:0 14px}.logo{font-size:17px}main{padding:16px 12px 35px}
+ .hero{padding:24px;min-height:300px}.hero-art{right:-10px;opacity:.2}
+ .stats{grid-template-columns:repeat(2,1fr)}.game-grid{gap:9px}
+ .card-art{height:110px;font-size:48px}.card-body{padding:11px}
+ .card-body h3{font-size:14px}.card-body p{font-size:11px;min-height:75px}
+ .info-grid{grid-template-columns:1fr}.header-right .profile-label{display:none}
+ .mobile-pad{display:flex}
 }
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar">
- <div class="brand"><div class="brand-icon">🎮</div><div>GAME<span>HUB</span><div style="font-size:9px;color:#7e8db1;letter-spacing:3px;margin-top:4px">ULTIMATE</div></div></div>
- <div class="nav-label">MAIN MENU</div>
- <button class="nav-button active" data-page="home"><span class="nav-icon">⌂</span> Home</button>
- <button class="nav-button" data-page="library"><span class="nav-icon">▦</span> Game Library</button>
- <button class="nav-button" data-page="missions"><span class="nav-icon">⚡</span> Missions</button>
- <button class="nav-button" data-page="profile"><span class="nav-icon">♙</span> My Profile</button>
- <div class="nav-label">YOUR SPACE</div>
- <button class="nav-button" data-page="achievements"><span class="nav-icon">🏆</span> Achievements</button>
- <button class="nav-button" data-page="shop"><span class="nav-icon">🛍</span> Shop Demo</button>
- <button class="nav-button" data-page="settings"><span class="nav-icon">⚙</span> Settings</button>
- <div class="sidebar-bottom"><div class="side-note"><strong>🚀 Keep playing!</strong><br>Speel games, verdien XP en bouw je eigen profiel op.</div></div>
-</aside>
-
-<main class="main">
- <header class="topbar">
-  <label class="search">⌕ <input id="globalSearch" placeholder="Search games..." aria-label="Zoek games"></label>
-  <div class="top-actions"><div class="pill">🪙 <b id="topCoins">0</b></div><div class="pill">⭐ <b id="topLevel">LVL 1</b></div><div class="avatar">👾</div></div>
- </header>
-
- <section class="page active" id="home">
-  <div class="hero">
-   <div class="hero-copy">
-    <div class="eyebrow">✦ YOUR NEXT ADVENTURE STARTS HERE</div>
-    <h1>PLAY <span class="gradient-text">BEYOND.</span></h1>
-    <p>Ontdek nieuwe werelden, verbreek records en word de ultieme speler. Jouw volgende avontuur begint hier.</p>
-    <div class="hero-buttons"><button class="primary" id="heroPlay">▶ PLAY NOW</button><button class="secondary" id="heroExplore">EXPLORE GAMES ↗</button></div>
-   </div>
-   <div class="hero-art" aria-hidden="true">🕹️</div>
+<header>
+ <div class="logo">GAME<span>HUB</span> 3D</div>
+ <div class="header-right"><div class="coins">🪙 <b id="coins">0</b></div><div class="coins profile-label">⭐ LEVEL <b id="level">1</b></div></div>
+</header>
+<main id="homeScreen">
+ <section class="hero">
+  <div class="hero-copy">
+   <div class="eyebrow">YOUR NEXT ADVENTURE STARTS HERE</div>
+   <h1>PLAY <span class="gradient">BEYOND.</span></h1>
+   <p>Vier eigen 3D-gamewerelden. Race, bouw, spring en test je skills in een kleurrijke interactieve wereld.</p>
+   <div class="hero-actions"><button class="btn primary" id="playFirst">▶ PLAY NOW</button><button class="btn secondary" id="browse">EXPLORE WORLDS ↓</button></div>
   </div>
-  <div class="stats-grid">
-   <div class="stat"><div class="stat-icon">🎮</div><div class="stat-label">AVAILABLE GAMES</div><div class="stat-value">04</div><div class="stat-foot">● Ready to play</div></div>
-   <div class="stat"><div class="stat-icon">🏆</div><div class="stat-label">TOTAL HIGH SCORE</div><div class="stat-value" id="statScore">0</div><div class="stat-foot">Your personal best</div></div>
-   <div class="stat"><div class="stat-icon">⚡</div><div class="stat-label">PLAYER LEVEL</div><div class="stat-value" id="statLevel">1</div><div class="stat-foot" id="statXP">0 XP earned</div></div>
-   <div class="stat"><div class="stat-icon">🪙</div><div class="stat-label">YOUR COINS</div><div class="stat-value" id="statCoins">0</div><div class="stat-foot">Earned by playing</div></div>
-  </div>
-  <div class="section-head"><div><h2>🔥 Featured Games</h2><p>Pick your next challenge</p></div><button class="text-button" data-goto="library">View all ↗</button></div>
-  <div class="game-grid" id="homeGames"></div>
-  <div class="activity-grid">
-   <div class="box"><h3>⚡ Daily Missions</h3><div id="homeMissions"></div><button class="secondary" style="width:100%;margin-top:10px" data-goto="missions">VIEW MISSIONS</button></div>
-   <div class="box"><h3>🏆 Your Progress</h3><div class="activity-row"><div class="activity-icon">⭐</div><div>Player level<small id="homeLevelText">Level 1 adventurer</small></div><b id="homeLevel">1</b></div><div class="progress"><div id="homeXPBar" style="width:0%"></div></div><div class="activity-row"><div class="activity-icon">🎯</div><div>Games played<small>Across all game modes</small></div><b id="homePlays">0</b></div><div class="activity-row"><div class="activity-icon">🏅</div><div>Achievements<small>Unlock new milestones</small></div><b id="homeAch">0 / 6</b></div></div>
-  </div>
+  <div class="hero-art">🎮</div>
  </section>
-
- <section class="page" id="library">
-  <h1 class="page-title">Game Library 🎮</h1><p class="page-subtitle">Vier games, vier manieren om je skills te testen. Zoek je volgende favoriet.</p>
-  <div class="filter-row"><button class="filter-btn active" data-filter="all">All games</button><button class="filter-btn" data-filter="action">Action</button><button class="filter-btn" data-filter="arcade">Arcade</button><button class="filter-btn" data-filter="racing">Racing</button></div>
-  <div class="game-grid" id="libraryGames"></div><div class="empty-state" id="emptySearch">Geen games gevonden. Probeer een andere zoekterm.</div>
+ <div class="stats">
+  <div class="stat">🎮<br><small>GAMES</small><strong>04</strong></div>
+  <div class="stat">🏆<br><small>BEST SCORE</small><strong id="best">0</strong></div>
+  <div class="stat">⚡<br><small>TOTAL XP</small><strong id="xp">0</strong></div>
+  <div class="stat">🎯<br><small>GAMES PLAYED</small><strong id="plays">0</strong></div>
+ </div>
+ <div class="section-title"><h2>🔥 Choose your world</h2><span class="muted">4 unique game modes</span></div>
+ <section class="game-grid" id="gameGrid"></section>
+ <section class="info-grid">
+  <div class="panel"><h3>🏆 Progression system</h3><p>Verdien XP en testcoins door te spelen. Je highscores worden lokaal in deze browser opgeslagen.</p></div>
+  <div class="panel"><h3>🚀 The roadmap</h3><p>Volgende mogelijke updates: meer levels, betere characteranimaties, extra obstakels, geluidseffecten en een uitgebreidere wereld.</p></div>
  </section>
-
- <section class="page" id="missions">
-  <h1 class="page-title">Missions ⚡</h1><p class="page-subtitle">Voltooi opdrachten om XP en coins te verdienen. Voortgang wordt lokaal bewaard.</p>
-  <div class="box"><h3>📅 Today's Challenges</h3><div id="allMissions"></div></div>
-  <div class="box" style="margin-top:16px"><h3>How rewards work</h3><p class="page-subtitle" style="margin:0">Speel games om XP te verdienen. Missies geven extra beloningen wanneer je de vereiste score behaalt. Dit is een lokaal spelsysteem, geen echte geldbeloning.</p></div>
- </section>
-
- <section class="page" id="profile">
-  <h1 class="page-title">My Profile 👾</h1><p class="page-subtitle">Jouw gamevoortgang en persoonlijke records.</p>
-  <div class="profile-hero"><div class="big-avatar">👾</div><div style="flex:1"><h2 id="profileLevel">Level 1 Player</h2><p id="profileSummary">Nieuw in de arena</p><div class="xp-track"><div id="profileXPBar" style="width:0%"></div></div><p id="profileXPText" style="font-size:11px;margin-top:8px">0 / 100 XP</p></div></div>
-  <div class="stats-grid"><div class="stat"><div class="stat-label">TOTAL XP</div><div class="stat-value" id="profileXP">0</div></div><div class="stat"><div class="stat-label">COINS</div><div class="stat-value" id="profileCoins">0</div></div><div class="stat"><div class="stat-label">GAMES PLAYED</div><div class="stat-value" id="profilePlays">0</div></div><div class="stat"><div class="stat-label">BEST SCORE</div><div class="stat-value" id="profileBest">0</div></div></div>
-  <div class="section-head"><div><h2>Personal Records</h2><p>Je beste score per game</p></div></div><div class="box" id="records"></div>
- </section>
-
- <section class="page" id="achievements">
-  <h1 class="page-title">Achievements 🏆</h1><p class="page-subtitle">Ontgrendel badges door te spelen en je records te verbeteren.</p>
-  <div class="achievement-grid" id="achievementGrid"></div>
- </section>
-
- <section class="page" id="shop">
-  <h1 class="page-title">Cosmetic Shop ✨</h1><p class="page-subtitle">Een demo-winkel voor toekomstige skins en effecten. Gebruik alleen je verdiende testcoins.</p>
-  <div class="game-grid" id="shopGrid"></div>
-  <div class="box" style="margin-top:20px"><h3>ℹ️ Shop demo</h3><p class="page-subtitle" style="margin:0">Aankopen veranderen alleen de demo-inventaris. Er worden geen echte betalingen gedaan en items geven geen voordeel in de games.</p></div>
- </section>
-
- <section class="page" id="settings">
-  <h1 class="page-title">Settings ⚙️</h1><p class="page-subtitle">Pas je ervaring aan.</p>
-  <div class="box">
-   <div class="settings-row"><div><strong>Sound effects</strong><p>Geluid bij acties en beloningen.</p></div><button class="toggle on" id="soundToggle" aria-label="Geluid aan of uit"></button></div>
-   <div class="settings-row"><div><strong>Reduced motion</strong><p>Verminder sommige animaties.</p></div><button class="toggle" id="motionToggle" aria-label="Animaties aan of uit"></button></div>
-   <div class="settings-row"><div><strong>Reset progress</strong><p>Verwijder je lokale XP, coins en records.</p></div><button class="secondary" id="resetProgress">RESET</button></div>
-   <div class="settings-row"><div><strong>Fullscreen</strong><p>Speel met een groter gamevenster.</p></div><button class="secondary" id="fullscreenBtn">OPEN</button></div>
-  </div>
-  <div class="box" style="margin-top:16px"><h3>About GameHub Ultimate</h3><p class="page-subtitle" style="margin:0">Een browsergame-project. Je voortgang wordt opgeslagen in deze browser. Er is geen account of server nodig voor deze demo.</p></div>
- </section>
- <div class="footer">GAMEHUB ULTIMATE · PLAY FAIR · HAVE FUN</div>
+ <p class="muted" style="text-align:center;font-size:11px;margin-top:35px">GAMEHUB 3D · Een eigen browsergame-project</p>
 </main>
-</div>
 
-<section id="gamePage" aria-label="Game">
- <header class="game-top"><strong id="gameTitle">GAME</strong><div class="game-top-actions"><button id="pauseGame">Ⅱ Pause</button><button id="exitGame">✕ Exit</button></div></header>
- <div id="stage"><canvas id="gameCanvas"></canvas>
-  <div class="game-hud"><div class="hud-panel" id="leftHud">SCORE <b>0</b></div><div class="hud-panel" id="rightHud">BEST <b>0</b></div></div>
-  <div id="gameMessage"></div><div id="gameControls"></div>
-  <div class="mobile-controls" id="mobileControls">
-   <div class="touch-group"><button class="touch-btn" data-key="left">◀</button><button class="touch-btn" data-key="right">▶</button></div>
-   <div class="touch-group"><button class="touch-btn" data-key="action">●</button><button class="touch-btn" data-key="jump">⬆</button></div>
+<section id="gameScreen">
+ <div class="game-header"><strong id="gameTitle">GAME</strong><div><button id="restart">↻ Restart</button> <button id="exit">✕ Menu</button></div></div>
+ <div id="viewport">
+  <div class="hud"><div class="hud-box" id="hudLeft">SCORE <b>0</b></div><div class="hud-box" id="hudRight">BEST <b>0</b></div></div>
+  <div id="overlay"></div>
+  <div class="controls" id="controlsText"></div>
+  <div class="mobile-pad">
+   <div class="pad-group"><button class="pad-button" data-key="left">◀</button><button class="pad-button" data-key="right">▶</button></div>
+   <div class="pad-group"><button class="pad-button" data-key="action">●</button><button class="pad-button" data-key="jump">⬆</button></div>
   </div>
  </div>
- <footer class="game-footer"><span id="gameStatus">Ready</span><span>GAMEHUB ULTIMATE</span></footer>
+ <div class="game-footer"><span id="status">Loading world...</span><span>WASD / ARROWS · GAMEHUB 3D</span></div>
 </section>
-<div id="toastArea" aria-live="polite"></div>
 
 <script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+
 const $=id=>document.getElementById(id);
-const games=[
- {id:"arena",name:"Battle Arena 3D",genre:"action",emoji:"🌴",art:"art-arena",desc:"Oefen je aim in een kleurrijke 3D-arena met bewegende targets.",controls:"WASD bewegen · Muis richten · Klik schieten · Spatie springen",bestKey:"arena"},
- {id:"runner",name:"Neon Rush",genre:"arcade",emoji:"🏃",art:"art-runner",desc:"Ren zo ver mogelijk, ontwijk obstakels en pak coins onderweg.",controls:"← → bewegen · Spatie springen · Mobiel: knoppen"},
- {id:"space",name:"Space Defender",genre:"action",emoji:"🚀",art:"art-space",desc:"Bestuur je ruimteschip en vernietig de asteroïden.",controls:"← → bewegen · Spatie schieten · Mobiel: knoppen"},
- {id:"racer",name:"Drift Legends",genre:"racing",emoji:"🏎️",art:"art-racer",desc:"Race over een neonbaan, ontwijk obstakels en verbeter je score.",controls:"← → sturen · ↑ versnellen · ↓ remmen"}
+const definitions=[
+ {id:"battle",name:"Battle Arena",emoji:"🌴",genre:"ACTION",art:"battle",desc:"Verken een kleurrijke 3D-arena, beweeg rond en raak bewegende targets.",controls:"WASD / pijlen = bewegen · Muis = richten · Klik = schieten",color:0x57c7ff},
+ {id:"racing",name:"Rocket Racing",emoji:"🏎️",genre:"RACING",art:"racing",desc:"Race over een neonbaan, stuur door de bochten en verzamel boost-orbs.",controls:"← → sturen · ↑ versnellen · ↓ remmen · Spatie = boost",color:0xff6b8b},
+ {id:"blocks",name:"Block World",emoji:"🧱",genre:"SANDBOX",art:"blocks",desc:"Loop rond op een blokken-eiland. Plaats en verwijder blokken in je eigen wereld.",controls:"WASD bewegen · Klik = blok plaatsen · Shift + klik = blok verwijderen",color:0x4ed78d},
+ {id:"fall",name:"Fall Challenge",emoji:"🤸",genre:"OBSTACLE",art:"fall",desc:"Spring over gekleurde platforms en ontwijk bewegende hindernissen.",controls:"WASD / pijlen = bewegen · Spatie = springen",color:0xff80d2}
 ];
-const achievements=[
- {id:"first",icon:"🎮",name:"First Game",desc:"Speel je eerste game.",check:p=>p.plays>=1},
- {id:"score",icon:"🎯",name:"Score Hunter",desc:"Behaal 500 punten in één run.",check:p=>p.best>=500},
- {id:"ten",icon:"🔥",name:"Dedicated",desc:"Speel 10 games.",check:p=>p.plays>=10},
- {id:"level",icon:"⭐",name:"Level Up",desc:"Bereik level 5.",check:p=>Math.floor(p.xp/100)+1>=5},
- {id:"coins",icon:"🪙",name:"Coin Collector",desc:"Verzamel 100 coins.",check:p=>p.coins>=100},
- {id:"all",icon:"🏆",name:"Explorer",desc:"Speel alle vier de games.",check:p=>games.every(g=>(p.gamePlays[g.id]||0)>0)}
-];
-const missionTemplates=[
- {id:"play",icon:"🎮",name:"Warm-up",desc:"Speel 1 game",goal:1,reward:20,type:"plays"},
- {id:"score",icon:"🎯",name:"Score Chaser",desc:"Behaal een score van 100",goal:100,reward:30,type:"score"},
- {id:"runner",icon:"🏃",name:"On the Run",desc:"Speel Neon Rush 1 keer",goal:1,reward:25,type:"runner"},
- {id:"space",icon:"🚀",name:"Space Cadet",desc:"Speel Space Defender 1 keer",goal:1,reward:25,type:"space"}
-];
-const STORE="gamehubUltimateV1";
-function fresh(){return {xp:0,coins:0,plays:0,best:0,records:{},gamePlays:{},inventory:[],missions:{},sound:true,motion:false}}
-let profile=fresh();
-try{const saved=JSON.parse(localStorage.getItem(STORE)||"null");if(saved)profile={...fresh(),...saved,records:saved.records||{},gamePlays:saved.gamePlays||{},missions:saved.missions||{},inventory:saved.inventory||[]}}catch(e){}
-let activeFilter="all",query="",currentGame=null,gameEngine=null,gamePaused=false,gameRunId=0;
-function save(){try{localStorage.setItem(STORE,JSON.stringify(profile))}catch(e){}}
-function level(){return Math.floor(profile.xp/100)+1}
-function bestScore(){return Math.max(0,...Object.values(profile.records).map(Number))}
-function notify(message){
- const el=document.createElement("div");el.className="toast";el.textContent=message;$("toastArea").appendChild(el);
- setTimeout(()=>el.remove(),2600);
+const STORE="gamehub3dProgress";
+const fresh=()=>({coins:0,xp:0,plays:0,best:0,records:{},played:{}});
+let data=fresh();
+try{data={...fresh(),...JSON.parse(localStorage.getItem(STORE)||"{}")}}catch{}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(data))}catch{}}
+function level(){return Math.floor(data.xp/100)+1}
+function refresh(){
+ $("coins").textContent=data.coins;$("level").textContent=level();
+ $("best").textContent=data.best;$("xp").textContent=data.xp;$("plays").textContent=data.plays;
 }
-function sound(freq=500,duration=.07){
- if(!profile.sound)return;
- try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
- const c=new C(),o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;
- o.type="sine";g.gain.value=.035;o.connect(g);g.connect(c.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,c.currentTime+duration);o.stop(c.currentTime+duration);o.onended=()=>c.close()}catch(e){}
+function toast(s){const e=document.createElement("div");e.className="toast";e.textContent=s;document.body.append(e);setTimeout(()=>e.remove(),2300)}
+$("gameGrid").innerHTML=definitions.map(g=>`
+ <article class="game-card">
+  <div class="card-art ${g.art}"><span>${g.emoji}</span></div>
+  <div class="card-body"><h3>${g.name}</h3><p>${g.desc}</p>
+   <div class="card-foot"><span class="tag">${g.genre}</span><span>🏆 ${data.records[g.id]||0}</span></div>
+   <button class="btn primary start-game" data-id="${g.id}">PLAY NOW ↗</button>
+  </div>
+ </article>`).join("");
+refresh();
+
+let renderer,scene,camera,clock,active=null,raf=0;
+let objects=[],targets=[],keys={},touch={},player=null,score=0,finished=false;
+let elapsed=0,spawnTimer=0,boost=100,velocity=0,groundY=0,gameMessage=null;
+const viewport=$("viewport");
+const v3=(x=0,y=0,z=0)=>new THREE.Vector3(x,y,z);
+function mat(color,roughness=.8,metalness=0){return new THREE.MeshStandardMaterial({color,roughness,metalness})}
+function box(w,h,d,color,x,y,z,options={}){
+ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(color,options.roughness??.8,options.metalness??0));
+ m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);objects.push(m);return m;
 }
-function addProgress({score=0,xp=0,coins=0,gameId=null}={}){
- profile.xp+=Math.max(0,Math.floor(xp));profile.coins+=Math.max(0,Math.floor(coins));
- profile.plays++;
- profile.best=Math.max(profile.best,score);
- if(gameId){profile.gamePlays[gameId]=(profile.gamePlays[gameId]||0)+1;
- profile.records[gameId]=Math.max(profile.records[gameId]||0,score)}
- save();refresh();
- checkAchievements();
+function sphere(r,color,x,y,z){
+ const m=new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(color,.35));
+ m.position.set(x,y,z);m.castShadow=true;scene.add(m);objects.push(m);return m;
 }
-function checkAchievements(){
- for(const a of achievements){
-  if(a.check(profile)&&!profile.inventory.includes("achievement:"+a.id)){
-   profile.inventory.push("achievement:"+a.id);save();notify("Achievement unlocked: "+a.name+" 🏆");sound(800,.12);
+function plane(w,d,color,x,y,z){
+ const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),mat(color));
+ m.rotation.x=-Math.PI/2;m.position.set(x,y,z);m.receiveShadow=true;scene.add(m);objects.push(m);return m;
+}
+function cylinder(r1,r2,h,color,x,y,z){
+ const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,12),mat(color));
+ m.position.set(x,y,z);m.castShadow=true;scene.add(m);objects.push(m);return m;
+}
+function addLight(){
+ scene.add(new THREE.HemisphereLight(0xc9e8ff,0x3b4261,2));
+ const sun=new THREE.DirectionalLight(0xffffff,3);
+ sun.position.set(12,22,10);sun.castShadow=true;
+ sun.shadow.mapSize.set(1024,1024);scene.add(sun);
+}
+function clearWorld(){
+ objects.forEach(o=>{scene.remove(o);o.geometry?.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material.dispose()}});
+ objects=[];targets=[];player=null;
+}
+function initRenderer(){
+ if(!renderer){
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  viewport.prepend(renderer.domElement);
+ }
+ resize();
+}
+function resize(){
+ if(!renderer||!camera)return;
+ const w=viewport.clientWidth,h=viewport.clientHeight;
+ renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
+}
+window.addEventListener("resize",resize);
+
+function makeCharacter(color=0x4bbaff){
+ const group=new THREE.Group();
+ const body=new THREE.Mesh(new THREE.CapsuleGeometry(.38,.65,5,10),mat(color));
+ body.position.y=.9;body.castShadow=true;group.add(body);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(.31,16,12),mat(0xffd0a8));
+ head.position.y=1.55;head.castShadow=true;group.add(head);
+ const eyeMat=mat(0x17203b);
+ for(const x of [-.105,.105]){
+  const eye=new THREE.Mesh(new THREE.SphereGeometry(.045,8,6),eyeMat);
+  eye.position.set(x,1.59,.27);group.add(eye);
+ }
+ for(const x of [-.22,.22]){
+  const leg=new THREE.Mesh(new THREE.BoxGeometry(.2,.5,.24),mat(0x263d65));
+  leg.position.set(x,.25,0);leg.castShadow=true;group.add(leg);
+ }
+ scene.add(group);objects.push(group);return group;
+}
+function start(id){
+ active=definitions.find(g=>g.id===id);if(!active)return;
+ $("homeScreen").style.display="none";$("gameScreen").classList.add("open");
+ $("gameTitle").textContent=active.name;$("controlsText").textContent=active.controls;
+ $("status").textContent="World ready";$("overlay").innerHTML="";
+ $("gameScreen").scrollTop=0;
+ keys={};touch={};score=0;elapsed=0;spawnTimer=0;boost=100;velocity=0;finished=false;
+ initRenderer();
+ if(scene)clearWorld();
+ scene=new THREE.Scene();
+ scene.background=new THREE.Color(id==="battle"?0x85d8ff:id==="racing"?0x171332:id==="blocks"?0x9adfff:0x82dfff);
+ scene.fog=new THREE.Fog(scene.background,35,100);
+ camera=new THREE.PerspectiveCamera(65,viewport.clientWidth/viewport.clientHeight,.1,180);
+ addLight();
+ if(id==="battle")buildBattle();
+ if(id==="racing")buildRacing();
+ if(id==="blocks")buildBlocks();
+ if(id==="fall")buildFall();
+ resize();clock=new THREE.Clock();
+ if(raf)cancelAnimationFrame(raf);
+ raf=requestAnimationFrame(loop);
+}
+function buildBattle(){
+ plane(100,100,0x69b86b,0,0,0);
+ // arena ring
+ const ring=new THREE.Mesh(new THREE.TorusGeometry(19,.35,8,90),mat(0xffdc75));
+ ring.rotation.x=Math.PI/2;ring.position.y=.18;scene.add(ring);objects.push(ring);
+ // buildings and trees
+ for(let i=0;i<22;i++){
+  const a=i/22*Math.PI*2,r=15+Math.random()*14,x=Math.cos(a)*r,z=Math.sin(a)*r;
+  if(i%3===0){
+   box(2.5,2+Math.random()*2,2.5,0x8c6cba,x,1,z);
+   box(2.7,.22,2.7,0xffd477,x,2.5,z);
+  }else{
+   cylinder(.3,.4,1.6,0x80513b,x,.8,z);
+   sphere(1.3, i%2?0x268f61:0x37a96c,x,2,z);
   }
  }
-}
-function rewardMission(id){
- if(profile.missions[id])return;
- const m=missionTemplates.find(x=>x.id===id);if(!m)return;
- profile.missions[id]=true;profile.coins+=m.reward;profile.xp+=15;save();refresh();
- notify("Mission complete! +"+m.reward+" coins");sound(760,.12);
-}
-function missionProgress(m){
- if(profile.missions[m.id])return m.goal;
- if(m.type==="plays")return Math.min(m.goal,profile.plays);
- if(m.type==="score")return Math.min(m.goal,profile.best);
- if(m.type==="runner"||m.type==="space")return Math.min(m.goal,profile.gamePlays[m.type]||0);
- return 0;
-}
-function checkMissions(){
- for(const m of missionTemplates)if(missionProgress(m)>=m.goal&&!profile.missions[m.id])rewardMission(m.id);
-}
-function refresh(){
- $("topCoins").textContent=profile.coins;$("topLevel").textContent="LVL "+level();
- $("statScore").textContent=profile.best;$("statLevel").textContent=level();
- $("statXP").textContent=profile.xp+" XP earned";$("statCoins").textContent=profile.coins;
- $("homeLevel").textContent=level();$("homeLevelText").textContent="Level "+level()+" adventurer";
- $("homePlays").textContent=profile.plays;
- $("homeAch").textContent=achievements.filter(a=>profile.inventory.includes("achievement:"+a.id)).length+" / "+achievements.length;
- const progress=profile.xp%100;$("homeXPBar").style.width=progress+"%";
- $("profileLevel").textContent="Level "+level()+" Player";$("profileSummary").textContent=profile.plays?profile.plays+" games played · Keep it going!":"Nieuw in de arena";
- $("profileXP").textContent=profile.xp;$("profileCoins").textContent=profile.coins;
- $("profilePlays").textContent=profile.plays;$("profileBest").textContent=profile.best;
- $("profileXPBar").style.width=progress+"%";$("profileXPText").textContent=progress+" / 100 XP";
- $("records").innerHTML=games.map(g=>`<div class="activity-row"><div class="activity-icon">${g.emoji}</div><div>${g.name}<small>${profile.gamePlays[g.id]||0} runs played</small></div><b>${profile.records[g.id]||0}</b></div>`).join("");
- renderMissions();renderAchievements();renderShop();renderGames();
-}
-function card(g){
- return `<article class="game-card" data-game-card="${g.id}" data-genre="${g.genre}" data-name="${g.name.toLowerCase()}"><div class="game-art ${g.art}"><span class="game-emoji">${g.emoji}</span></div><div class="game-content"><h3>${g.name}</h3><p>${g.desc}</p><div class="game-meta"><span class="tag">${g.genre.toUpperCase()}</span><span>🏆 ${profile.records[g.id]||0}</span></div><button class="play-small" data-play="${g.id}">PLAY NOW ↗</button></div></article>`;
-}
-function renderGames(){
- $("homeGames").innerHTML=games.map(card).join("");
- const shown=games.filter(g=>(activeFilter==="all"||g.genre===activeFilter)&&(!query||(g.name+" "+g.desc+" "+g.genre).toLowerCase().includes(query)));
- $("libraryGames").innerHTML=shown.map(card).join("");
- $("emptySearch").style.display=shown.length?"none":"block";
-}
-function renderMissions(){
- const html=missionTemplates.map(m=>{
-  const p=missionProgress(m),done=!!profile.missions[m.id],percent=Math.min(100,p/m.goal*100);
-  return `<div class="challenge"><div class="challenge-icon">${m.icon}</div><div class="challenge-text"><strong>${m.name} ${done?"✓":""}</strong>${m.desc}<div class="progress"><div style="width:${percent}%"></div></div><small>${p} / ${m.goal} · Reward: ${m.reward} coins</small></div><button class="secondary" style="padding:8px 10px;font-size:11px" ${done?"disabled":""} data-mission-play="${m.id}">${done?"DONE":"PLAY"}</button></div>`;
- }).join("");
- $("homeMissions").innerHTML=html;$("allMissions").innerHTML=html;
-}
-function renderAchievements(){
- $("achievementGrid").innerHTML=achievements.map(a=>{
- const unlocked=profile.inventory.includes("achievement:"+a.id);
- return `<article class="achievement ${unlocked?"":"locked"}"><div class="emoji">${a.icon}</div><h4>${a.name} ${unlocked?"✓":"🔒"}</h4><p>${a.desc}</p><p style="margin-top:9px;color:${unlocked?"#55efaa":"#9daac7"}">${unlocked?"UNLOCKED":"LOCKED"}</p></article>`;
- }).join("");
-}
-const shopItems=[
- {id:"blue",icon:"🔷",name:"Blue Neon",desc:"Een coole blauwe stijl.",price:30},
- {id:"flame",icon:"🔥",name:"Flame Effect",desc:"Vurige demo-uitstraling.",price:60},
- {id:"star",icon:"🌟",name:"Star Aura",desc:"Een ster voor je collectie.",price:90},
- {id:"crown",icon:"👑",name:"Golden Crown",desc:"Een gouden cosmetisch item.",price:120}
-];
-function renderShop(){
- $("shopGrid").innerHTML=shopItems.map(item=>{
- const owned=profile.inventory.includes("item:"+item.id);
- return `<article class="game-card"><div class="game-art art-space"><span class="game-emoji">${item.icon}</span></div><div class="game-content"><h3>${item.name}</h3><p>${item.desc}</p><div class="game-meta"><span class="tag">COSMETIC</span><span>🪙 ${item.price}</span></div><button class="play-small" data-buy="${item.id}" ${owned?"disabled":""}>${owned?"OWNED ✓":"BUY ITEM"}</button></div></article>`;
- }).join("");
-}
-function showPage(id){
- if($("gamePage").classList.contains("active"))closeGame(false);
- document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
- document.querySelectorAll(".nav-button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
- if(id==="library")renderGames();
- window.scrollTo(0,0);
-}
-document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
-document.addEventListener("click",e=>{
- const play=e.target.closest("[data-play]");if(play)launchGame(play.dataset.play);
- const go=e.target.closest("[data-goto]");if(go)showPage(go.dataset.goto);
- const buy=e.target.closest("[data-buy]");if(buy)purchase(buy.dataset.buy);
- const mission=e.target.closest("[data-mission-play]");if(mission){
-  const id=mission.dataset.missionPlay;
-  if(id==="runner"||id==="space")launchGame(id);
-  else launchGame("runner");
+ for(let i=0;i<13;i++){
+  const a=Math.random()*Math.PI*2,r=4+Math.random()*12;
+  const target=sphere(.55,[0xff567b,0xffcf55,0x4be4ff,0xb88cff][i%4],Math.cos(a)*r,1+Math.random()*2,Math.sin(a)*r);
+  target.userData={target:true,phase:Math.random()*6,origin:target.position.clone(),alive:true};
+  targets.push(target);
  }
+ player=makeCharacter();player.position.set(0,0,8);
+ camera.position.set(0,7,14);camera.lookAt(0,1,0);
+ $("overlay").innerHTML='<div class="message"><h2>🏝️ BATTLE ARENA</h2><p>Raak de zwevende targets met je muis of door erop te tikken. Elk target geeft punten.</p><button class="btn primary" id="startOverlay">START GAME</button></div>';
+}
+function buildRacing(){
+ plane(100,100,0x202d38,0,0,0);
+ // oval loop using track mesh rings
+ const outer=new THREE.Mesh(new THREE.RingGeometry(10,18,96),mat(0x383d50));
+ outer.rotation.x=-Math.PI/2;outer.position.y=.03;scene.add(outer);objects.push(outer);
+ const inner=new THREE.Mesh(new THREE.CircleGeometry(10,64),mat(0x477b52));
+ inner.rotation.x=-Math.PI/2;inner.position.y=.04;scene.add(inner);objects.push(inner);
+ // lane markings
+ for(let i=0;i<56;i++){
+  const a=i/56*Math.PI*2;
+  box(.3,.05,.9,0xf5e6b2,Math.cos(a)*14,.09,Math.sin(a)*14);
+ }
+ // outer barriers
+ for(let i=0;i<90;i++){
+  const a=i/90*Math.PI*2;
+  box(1,.65,.65,i%3?0x4d7bce:0xf15b86,Math.cos(a)*18,.35,Math.sin(a)*18);
+ }
+ // collectible boost orbs
+ for(let i=0;i<12;i++){
+  const a=i/12*Math.PI*2;
+  const orb=sphere(.35,0x52e7ff,Math.cos(a)*14,1,Math.sin(a)*14);
+  orb.userData={orb:true,alive:true};
+  targets.push(orb);
+ }
+ player=box(1.2,.65,2,0xff5b83,0, .55,14,{roughness:.3,metalness:.2});
+ camera.position.set(0,11,22);camera.lookAt(0,0,0);
+ $("overlay").innerHTML='<div class="message"><h2>🏎️ ROCKET RACING</h2><p>Volg de baan, pak boost-orbs en probeer je beste tijd te verbeteren.</p><button class="btn primary" id="startOverlay">START RACE</button></div>';
+}
+function buildBlocks(){
+ plane(80,80,0x6dbf70,0,0,0);
+ // floating square island
+ box(24,2,24,0x815a3d,0,-1,0);
+ box(24,.4,24,0x58b95e,0,.1,0);
+ // buildable voxel grid
+ const palette=[0x55b96b,0x98704c,0x7db7ef,0xd9d9e8,0xffd166];
+ for(let x=-5;x<=5;x++)for(let z=-5;z<=5;z++){
+  if(Math.random()>.55)box(1,.25,1,palette[Math.floor(Math.random()*palette.length)],x,.42,z);
+ }
+ // hills and voxel trees
+ for(const [x,z] of [[-9,-8],[8,-7],[-8,8],[9,8]]){
+  box(2,2,2,0x815438,x,1,z);
+  box(2.6,2.6,2.6,0x36a85c,x,3,z);
+  box(2,2,2,0x27834c,x,5,z);
+ }
+ for(let i=0;i<18;i++){
+  const x=Math.round(Math.random()*18-9),z=Math.round(Math.random()*18-9);
+  if(Math.abs(x)<5&&Math.abs(z)<5)continue;
+  box(1,1,1,palette[Math.floor(Math.random()*palette.length)],x,Math.random()*2+.5,z);
+ }
+ player=makeCharacter(0x54a9ff);player.position.set(0,0,7);
+ camera.position.set(9,10,14);camera.lookAt(0,0,0);
+ $("overlay").innerHTML='<div class="message"><h2>🧱 BLOCK WORLD</h2><p>Verken het eiland. Klik op een leeg vak om een blok te plaatsen. Shift + klik verwijdert een blok dat je zelf hebt geplaatst.</p><button class="btn primary" id="startOverlay">ENTER WORLD</button></div>';
+}
+function buildFall(){
+ plane(100,100,0x4a396d,0,-.5,0);
+ // long colorful obstacle course
+ const colors=[0xff5c8a,0xffc857,0x54d7ff,0x7d75ff,0x56e3aa];
+ for(let i=0;i<18;i++){
+  const z=-i*4;
+  const x=Math.sin(i*.75)*3;
+  box(4,.5,4,colors[i%colors.length],x,0,z);
+  if(i%3===1){
+   const hurdle=box(3,.55,.45,0xffffff,x,1,z-1.3);
+   hurdle.userData={moving:true,phase:i};
+  }
+  if(i%4===2){
+   const moving=box(2,.5,2,0xffd65c,x+2,1,z);
+   moving.userData={movingPlatform:true,phase:i,baseX:x+2};
+  }
+ }
+ // start and finish
+ box(7,.6,6,0x54e7ff,0,0,3);
+ box(8,.4,2,0xffd75e,0,.3,-72);
+ player=makeCharacter(0xff6bca);player.position.set(0,0,3);
+ camera.position.set(0,8,13);camera.lookAt(0,0,-5);
+ $("overlay").innerHTML='<div class="message"><h2>🤸 FALL CHALLENGE</h2><p>Spring van platform naar platform. Val niet naar beneden en bereik de finish.</p><button class="btn primary" id="startOverlay">START CHALLENGE</button></div>';
+}
+let playing=false,velocityY=0,grounded=true,blockCount=0,boostActive=false;
+function begin(){
+ $("overlay").innerHTML="";playing=true;finished=false;
+ if(active.id==="battle")toast("Klik targets om punten te verdienen!");
+ if(active.id==="blocks")toast("Welkom in jouw blokkenwereld!");
+}
+$("gameScreen").addEventListener("click",e=>{
+ if(e.target.id==="startOverlay")begin();
 });
-$("globalSearch").addEventListener("input",e=>{query=e.target.value.toLowerCase();showPage("library");renderGames()});
-document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{
- activeFilter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderGames();
-}));
-$("heroPlay").onclick=()=>launchGame("arena");
-$("heroExplore").onclick=()=>showPage("library");
-function purchase(id){
- const item=shopItems.find(x=>x.id===id);if(!item)return;
- if(profile.inventory.includes("item:"+id))return notify("Je hebt dit item al.");
- if(profile.coins<item.price)return notify("Je hebt nog niet genoeg coins.");
- profile.coins-=item.price;profile.inventory.push("item:"+id);save();refresh();sound(700,.1);notify(item.name+" gekocht in de demo-shop!");
-}
-$("soundToggle").onclick=()=>{profile.sound=!profile.sound;$("soundToggle").classList.toggle("on",profile.sound);save();sound(500)};
-$("motionToggle").onclick=()=>{profile.motion=!profile.motion;$("motionToggle").classList.toggle("on",profile.motion);document.body.style.setProperty("--animation-duration",profile.motion?"0s":".25s");save()};
-$("fullscreenBtn").onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
-$("resetProgress").onclick=()=>{
- if(confirm("Weet je zeker dat je al je lokale voortgang wilt wissen?")){
-  profile=fresh();save();refresh();notify("Voortgang gewist.");
- }
+$("playFirst").onclick=()=>start("battle");
+$("browse").onclick=()=>document.querySelector(".section-title").scrollIntoView({behavior:"smooth"});
+document.querySelectorAll(".start-game").forEach(b=>b.addEventListener("click",()=>start(b.dataset.id)));
+$("exit").onclick=()=>{
+ playing=false;active=null;
+ if(raf)cancelAnimationFrame(raf);
+ $("gameScreen").classList.remove("open");$("homeScreen").style.display="block";
+ clearWorld();keys={};touch={};
 };
-$("soundToggle").classList.toggle("on",profile.sound);
-$("motionToggle").classList.toggle("on",profile.motion);
-
-// ---------------- GAME ENGINE ----------------
-const canvas=$("gameCanvas"),ctx=canvas.getContext("2d");
-let W=800,H=500,lastTime=0,elapsed=0,score=0,gameOver=false;
-let keys={},touch={},objects=[],particles=[],player={},gameSettings={};
-function resizeCanvas(){
- const r=$("stage").getBoundingClientRect();
- const dpr=Math.min(devicePixelRatio||1,2);
- W=Math.max(320,r.width);H=Math.max(240,r.height);
- canvas.width=Math.floor(W*dpr);canvas.height=Math.floor(H*dpr);
- canvas.style.width=W+"px";canvas.style.height=H+"px";
- ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-const rand=(a,b)=>a+Math.random()*(b-a);
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-function gameText(title,sub=""){
- $("gameMessage").innerHTML=title+(sub?`<small>${sub}</small>`:"");
-}
-function launchGame(id){
- const g=games.find(x=>x.id===id);if(!g)return;
- currentGame=g;gameRunId++;gamePaused=false;
- $("gamePage").classList.add("active");$("gameTitle").textContent=g.name;
- $("gameControls").textContent=g.controls;
- $("gameStatus").textContent="In game";
- $("mobileControls").style.display=("ontouchstart" in window)?"flex":"none";
- $("pauseGame").textContent="Ⅱ Pause";
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- resizeCanvas();resetEngine(id);lastTime=performance.now();
-}
-function closeGame(returnHome=true){
- gameRunId++;currentGame=null;gamePaused=false;
- $("gamePage").classList.remove("active");keys={};touch={};
- if(returnHome)showPage("home");
-}
-$("exitGame").onclick=()=>closeGame(true);
-$("pauseGame").onclick=()=>{
- if(!currentGame)return;
- if(gameOver){resetEngine(currentGame.id);return}
- gamePaused=!gamePaused;
- $("pauseGame").textContent=gamePaused?"▶ Resume":"Ⅱ Pause";
- if(gamePaused)gameText("PAUSED","Klik op Resume om verder te spelen");
- else gameText("");
-};
-function resetEngine(id){
- score=0;elapsed=0;gameOver=false;objects=[];particles=[];keys={};touch={};
- player={x:W/2,y:H*.75,vx:0,vy:0,health:3,lane:0};
- gameSettings={id,lastSpawn:0,shootCooldown:0,world:0,roadOffset:0,hit:0};
- $("leftHud").innerHTML='SCORE <b>0</b>';
- $("rightHud").innerHTML='BEST <b>'+(profile.records[id]||0)+'</b>';
- $("gameMessage").innerHTML="";$("gameStatus").textContent="Playing";
- if(id==="arena")initArena();
- else if(id==="runner")initRunner();
- else if(id==="space")initSpace();
- else if(id==="racer")initRacer();
- drawGame(0);
-}
-function updateHud(){
- $("leftHud").innerHTML='SCORE <b>'+Math.floor(score)+'</b>';
- $("rightHud").innerHTML='BEST <b>'+(profile.records[currentGame?.id]||0)+'</b>';
-}
-function finishGame(){
- if(gameOver)return;
- gameOver=true;
- const finalScore=Math.floor(score);
- const xp=Math.max(5,Math.floor(finalScore/8));
- const coins=Math.max(2,Math.floor(finalScore/20));
- addProgress({score:finalScore,xp,coins,gameId:currentGame.id});
- checkMissions();
- $("gameStatus").textContent="Round complete";
- gameText(finalScore>0?"GAME OVER":"ROUND OVER",`Score: ${finalScore} · +${xp} XP · +${coins} coins`);
- $("pauseGame").textContent="↻ Retry";
- sound(180,.2);
-}
-function beginAgain(){if(currentGame)resetEngine(currentGame.id)}
-$("gameMessage").addEventListener("click",()=>{if(gameOver)beginAgain()});
-function gameInput(e,down){
- const k=e.key.toLowerCase();
- keys[k]=down;
- if([" ","arrowleft","arrowright","arrowup","arrowdown"].includes(k))e.preventDefault();
- if(down&&k===" "&&gameOver)beginAgain();
-}
-window.addEventListener("keydown",e=>gameInput(e,true));
-window.addEventListener("keyup",e=>gameInput(e,false));
-window.addEventListener("blur",()=>{keys={};touch={}});
+$("restart").onclick=()=>{if(active)start(active.id)};
+window.addEventListener("keydown",e=>{
+ const k=e.key.toLowerCase();keys[k]=true;
+ if([" ","arrowup","arrowdown","arrowleft","arrowright"].includes(k))e.preventDefault();
+});
+window.addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
+window.addEventListener("blur",()=>keys={});
 document.querySelectorAll("[data-key]").forEach(b=>{
  const k=b.dataset.key;
- const on=e=>{e.preventDefault();touch[k]=true};
- const off=e=>{e.preventDefault();touch[k]=false};
- b.addEventListener("pointerdown",on);b.addEventListener("pointerup",off);
- b.addEventListener("pointerleave",off);b.addEventListener("pointercancel",off);
+ b.addEventListener("pointerdown",e=>{e.preventDefault();touch[k]=true});
+ for(const ev of ["pointerup","pointercancel","pointerleave"])b.addEventListener(ev,e=>{e.preventDefault();touch[k]=false});
 });
-canvas.addEventListener("pointerdown",e=>{
- if(!currentGame)return;
- if(gameOver){beginAgain();return}
- if(currentGame.id==="space")shootSpace();
- if(currentGame.id==="arena")shootArena(e);
- if(currentGame.id==="runner"&&player.grounded)jumpRunner();
-});
-window.addEventListener("resize",()=>{if(currentGame){resizeCanvas();}});
-function pressed(left,right,up,down){
- return {left:!!(keys[left]||touch.left),right:!!(keys[right]||touch.right),
- up:!!(keys[up]||touch.jump),down:!!keys[down]};
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+renderer=null;
+function pointerCoords(e){
+ const rect=renderer.domElement.getBoundingClientRect();
+ pointer.x=(e.clientX-rect.left)/rect.width*2-1;
+ pointer.y=-((e.clientY-rect.top)/rect.height*2-1);
+ raycaster.setFromCamera(pointer,camera);
 }
-function roundedRect(x,y,w,h,r,color){
- ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();
-}
-function backgroundGradient(top,bottom){
- const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,top);g.addColorStop(1,bottom);
- ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-}
-function initArena(){
- player={x:W/2,y:H*.72,vx:0,vy:0,health:100};
- objects=[];
- for(let i=0;i<14;i++)objects.push({type:"target",x:rand(35,W-35),y:rand(65,H*.52),r:rand(13,21),phase:rand(0,6),alive:true,color:["#ff5d78","#ffcf58","#52dcff","#c38bff"][i%4]});
- for(let i=0;i<12;i++)objects.push({type:"tree",x:rand(10,W-10),y:rand(50,H*.68),r:rand(13,24)});
- gameText("BATTLE ARENA","Klik op targets om ze te raken");
-}
-function shootArena(e){
- const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
- let hit=null,best=Infinity;
- objects.filter(o=>o.type==="target"&&o.alive).forEach(o=>{
-  const d=Math.hypot(x-o.x,y-o.y);
-  if(d<o.r+14&&d<best){hit=o;best=d}
- });
- if(hit){hit.alive=false;score+=100;for(let i=0;i<12;i++)particles.push({x:hit.x,y:hit.y,vx:rand(-120,120),vy:rand(-120,120),life:.55,color:hit.color});sound(740,.07)}
- else sound(240,.04);
- updateHud();
- if(objects.filter(o=>o.type==="target"&&o.alive).length===0)finishGame();
-}
-function drawArena(dt){
- backgroundGradient("#5bc9ff","#d4f1ff");
- ctx.fillStyle="#83cf72";ctx.fillRect(0,H*.35,W,H*.65);
- // distant hills
- for(let i=0;i<8;i++){
-  ctx.fillStyle=i%2?"#54ad64":"#65bb6a";ctx.beginPath();
-  ctx.ellipse(i*W/6,H*.4, W*.12,H*.15,0,0,Math.PI*2);ctx.fill();
+function handleClick(e){
+ if(!playing||!active)return;
+ pointerCoords(e);
+ const hits=raycaster.intersectObjects(scene.children,true);
+ if(active.id==="battle"){
+  const target=hits.find(h=>h.object.userData.target&&h.object.userData.alive);
+  if(target){
+   const o=target.object;o.userData.alive=false;o.visible=false;
+   score+=100;addFloatingText("+100",o.position);updateHud();
+  }else score=Math.max(0,score-2);
  }
- ctx.fillStyle="#e5d19a";ctx.fillRect(0,H*.74,W,H*.12);
- for(const o of objects){
-  if(o.type==="tree"){
-   ctx.fillStyle="#80513b";ctx.fillRect(o.x-4,o.y,8,30);
-   ctx.fillStyle="#218950";ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,7);ctx.fill();
-   ctx.fillStyle="#43b968";ctx.beginPath();ctx.arc(o.x-5,o.y-6,o.r*.65,0,7);ctx.fill();
-  }else if(o.alive){
-   const bob=Math.sin(elapsed*2+o.phase)*4;
-   ctx.strokeStyle=o.color;ctx.lineWidth=5;ctx.beginPath();ctx.arc(o.x,o.y+bob,o.r,0,7);ctx.stroke();
-   ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(o.x,o.y+bob,5,0,7);ctx.fill();
-   ctx.fillStyle="#10172c";ctx.font="bold 10px Arial";ctx.textAlign="center";ctx.fillText("TARGET",o.x,o.y+o.r+17);
+ if(active.id==="blocks"){
+  const hit=hits.find(h=>h.object!==player&&h.object.geometry);
+  if(hit){
+   const normal=hit.face?.normal?.clone()||new THREE.Vector3(0,1,0);
+   normal.transformDirection(hit.object.matrixWorld);
+   const pos=hit.object.position.clone().add(normal);
+   if(e.shiftKey){
+    const own=objects.find(o=>o.userData?.placed&&o.position.distanceTo(hit.object.position)<.1);
+    if(own){scene.remove(own);objects=objects.filter(o=>o!==own);own.geometry.dispose();own.material.dispose();blockCount=Math.max(0,blockCount-1);score+=2}
+   }else if(blockCount<80){
+    const b=box(1,1,1,[0x54ce78,0x8cc9ff,0xffd166,0xff8db8][blockCount%4],Math.round(pos.x),Math.round(pos.y),Math.round(pos.z));
+    b.userData.placed=true;blockCount++;score+=5;
+   }
+   updateHud();
   }
  }
- // original cartoon player
- ctx.fillStyle="#253958";ctx.fillRect(player.x-16,H*.82,32,27);
- roundedRect(player.x-17,H*.68,34,43,10,"#358ee8");
- ctx.fillStyle="#ffcc9e";ctx.beginPath();ctx.arc(player.x,H*.65,13,0,7);ctx.fill();
- roundedRect(player.x+8,H*.72,24,9,4,"#ffb24c");
- ctx.fillStyle="#eaf7ff";ctx.font="bold 13px Arial";ctx.textAlign="left";ctx.fillText("Click targets to score",18,27);
 }
-function initRunner(){
- player={x:W*.25,y:H*.65,vy:0,grounded:false,r:17};
- objects=[];gameSettings.lastSpawn=0;gameSettings.speed=300;
- gameText("NEON RUSH","Spring over obstacles · collect stars");
+function addFloatingText(text,pos){
+ const spriteCanvas=document.createElement("canvas");spriteCanvas.width=128;spriteCanvas.height=64;
+ const c=spriteCanvas.getContext("2d");c.font="bold 32px Arial";c.fillStyle="#fff";c.textAlign="center";c.fillText(text,64,40);
+ const texture=new THREE.CanvasTexture(spriteCanvas);
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true}));
+ sprite.position.copy(pos).y+=1;sprite.scale.set(2,1,1);scene.add(sprite);objects.push(sprite);
 }
-function jumpRunner(){if(player.grounded){player.vy=-H*.82;player.grounded=false;sound(440,.05)}}
-function updateRunner(dt){
- const floor=H*.79;
- player.vy+=H*2.2*dt;player.y+=player.vy*dt;
- if(player.y>=floor-18){player.y=floor-18;player.vy=0;player.grounded=true}
- gameSettings.lastSpawn+=dt;
- if(gameSettings.lastSpawn>.9){gameSettings.lastSpawn=0;
-  objects.push({type:Math.random()<.72?"obstacle":"coin",x:W+30,y:Math.random()<.5?floor-18:floor-65,r:Math.random()<.72?17:11,done:false});
+function updateHud(){
+ $("hudLeft").innerHTML="SCORE <b>"+Math.floor(score)+"</b>";
+ $("hudRight").innerHTML="BEST <b>"+(data.records[active?.id]||0)+"</b>";
+}
+function endRound(message="ROUND COMPLETE"){
+ if(finished)return;
+ finished=true;playing=false;
+ const s=Math.max(0,Math.floor(score));
+ data.plays++;data.xp+=Math.max(5,Math.floor(s/10));data.coins+=Math.max(2,Math.floor(s/25));
+ data.best=Math.max(data.best,s);
+ if(active)data.records[active.id]=Math.max(data.records[active.id]||0,s);
+ save();refresh();updateHud();
+ $("status").textContent="Round complete";
+ $("overlay").innerHTML=`<div class="message"><h2>🏆 ${message}</h2><p>Score: ${s}<br>Je verdiende XP en testcoins. Probeer je record te verbreken!</p><button class="btn primary" id="again">PLAY AGAIN</button></div>`;
+}
+function movement(dt){
+ if(!player)return;
+ const left=keys.a||keys.arrowleft||touch.left;
+ const right=keys.d||keys.arrowright||touch.right;
+ const forward=keys.w||keys.arrowup;
+ const back=keys.s||keys.arrowdown;
+ const dir=new THREE.Vector3((right?1:0)-(left?1:0),0,(back?1:0)-(forward?1:0));
+ if(dir.lengthSq()>0)dir.normalize();
+ if(active.id==="battle"){
+  player.position.addScaledVector(dir,dt*7);
+  player.position.x=THREE.MathUtils.clamp(player.position.x,-20,20);
+  player.position.z=THREE.MathUtils.clamp(player.position.z,-20,20);
+  camera.position.lerp(new THREE.Vector3(player.position.x,player.position.y+7,player.position.z+10),dt*3);
+  camera.lookAt(player.position.x,player.position.y+1,player.position.z);
+  for(const t of targets)if(t.visible)t.position.y=t.userData.origin.y+Math.sin(elapsed*2+t.userData.phase)*.6;
+  score+=0;
+  if(targets.every(t=>!t.visible))endRound("ARENA CLEARED");
  }
- for(const o of objects){o.x-=gameSettings.speed*dt;if(o.type==="coin")o.y=floor-65+Math.sin(elapsed*4+o.x*.01)*12;
-  if(!o.done&&o.type==="coin"&&Math.hypot(o.x-player.x,o.y-player.y)<o.r+14){o.done=true;score+=25;sound(850,.05)}
-  if(!o.done&&o.type==="obstacle"&&Math.abs(o.x-player.x)<o.r+13&&player.y>o.y-28&&player.y<floor-5){finishGame();return}
+ if(active.id==="racing"){
+  const steer=(right?1:0)-(left?1:0);
+  if(forward)velocity=Math.min(19,velocity+dt*8);
+  else velocity=Math.max(6,velocity-dt*3);
+  if(back)velocity=Math.max(3,velocity-dt*13);
+  if(keys[" "]||touch.action){if(boost>0){velocity=Math.min(27,velocity+dt*20);boost=Math.max(0,boost-dt*28)}}
+  else boost=Math.min(100,boost+dt*7);
+  player.position.x+=steer*dt*(5+velocity*.4);
+  player.position.x=THREE.MathUtils.clamp(player.position.x,-17,17);
+  const angle=Math.atan2(player.position.x,14);
+  player.position.z=14*Math.cos(angle);player.position.x=14*Math.sin(angle);
+  player.rotation.y=-angle;
+  score+=dt*velocity*1.3;
+  for(const t of targets){
+   if(t.visible&&player.position.distanceTo(t.position)<1.7){
+    t.visible=false;score+=100;boost=Math.min(100,boost+25);
+   }
+  }
+  camera.position.lerp(new THREE.Vector3(player.position.x,player.position.y+7,player.position.z+9),dt*3);
+  camera.lookAt(player.position.x,0,player.position.z-3);
+  $("hudRight").innerHTML="BOOST <b>"+Math.floor(boost)+"%</b>";
  }
- objects=objects.filter(o=>o.x>-50&&!o.done);
- score+=dt*10;gameSettings.speed=Math.min(560,300+score*.4);
- if(keys[" "]||touch.jump)jumpRunner();
-}
-function drawRunner(){
- backgroundGradient("#111642","#341858");
- // neon stars
- for(let i=0;i<65;i++){const x=(i*97+elapsed*8)%W,y=(i*43)%Math.max(1,H*.75);ctx.fillStyle="#ffffff55";ctx.fillRect(x,y,2,2)}
- ctx.fillStyle="#242654";ctx.fillRect(0,H*.79,W,H*.21);
- ctx.strokeStyle="#49dfff";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,H*.79);ctx.lineTo(W,H*.79);ctx.stroke();
- for(let i=0;i<10;i++){ctx.fillStyle="#673bb0";ctx.fillRect(i*100-(elapsed*80%100),H*.53,40,H*.26)}
- for(const o of objects){
-  if(o.type==="coin"){ctx.fillStyle="#ffe36c";ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,7);ctx.fill();ctx.fillStyle="#ffab39";ctx.beginPath();ctx.arc(o.x,o.y,o.r*.5,0,7);ctx.fill()}
-  else{ctx.fillStyle="#ff4fa1";ctx.beginPath();ctx.moveTo(o.x-o.r,o.y+o.r);ctx.lineTo(o.x,o.y-o.r);ctx.lineTo(o.x+o.r,o.y+o.r);ctx.closePath();ctx.fill();ctx.fillStyle="#ff9ed0";ctx.fillRect(o.x-3,o.y-2,6,12)}
+ if(active.id==="blocks"){
+  player.position.addScaledVector(dir,dt*5);
+  player.position.x=THREE.MathUtils.clamp(player.position.x,-10,10);
+  player.position.z=THREE.MathUtils.clamp(player.position.z,-10,10);
+  camera.position.lerp(new THREE.Vector3(player.position.x+7,player.position.y+7,player.position.z+10),dt*2);
+  camera.lookAt(player.position.x,player.position.y+1,player.position.z);
+  score+=0;
  }
- ctx.fillStyle="#50dcff";ctx.beginPath();ctx.arc(player.x,player.y,17,0,7);ctx.fill();
- ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(player.x+5,player.y-4,4,0,7);ctx.fill();
-}
-function initSpace(){
- player={x:W/2,y:H*.82,r:16,speed:350};
- objects=[];gameSettings.lastSpawn=0;gameSettings.shootCooldown=0;
- for(let i=0;i<60;i++)objects.push({type:"star",x:rand(0,W),y:rand(0,H),r:rand(1,2),speed:rand(15,80)});
- gameText("SPACE DEFENDER","Move, shoot asteroids and survive");
-}
-function shootSpace(){
- if(gameOver)return;
- if(gameSettings.shootCooldown>0)return;
- gameSettings.shootCooldown=.2;
- objects.push({type:"bullet",x:player.x,y:player.y-20,r:4,vy:-520});
- sound(600,.04);
-}
-function updateSpace(dt){
- if(keys[" "]||touch.action)shootSpace();
- if(keys["arrowleft"]||keys.a||touch.left)player.x-=player.speed*dt;
- if(keys["arrowright"]||keys.d||touch.right)player.x+=player.speed*dt;
- player.x=clamp(player.x,20,W-20);
- gameSettings.shootCooldown=Math.max(0,gameSettings.shootCooldown-dt);
- gameSettings.lastSpawn+=dt;
- if(gameSettings.lastSpawn>.7){gameSettings.lastSpawn=0;objects.push({type:"asteroid",x:rand(25,W-25),y:-25,r:rand(13,26),vy:rand(100,220),vx:rand(-35,35),rot:rand(0,6)})}
- for(const o of objects){
-  if(o.type==="star"){o.y+=o.speed*dt;if(o.y>H){o.y=0;o.x=rand(0,W)}}
-  if(o.type==="bullet")o.y+=o.vy*dt;
-  if(o.type==="asteroid"){o.y+=o.vy*dt;o.x+=o.vx*dt;o.rot+=dt}
+ if(active.id==="fall"){
+  player.position.x+=dir.x*dt*6;
+  player.position.z+=dir.z*dt*6;
+  if((keys[" "]||touch.jump)&&grounded){velocityY=9;grounded=false}
+  velocityY-=20*dt;player.position.y+=velocityY*dt;
+  if(player.position.y<0){player.position.set(0,0,3);velocityY=0;grounded=true;score=Math.max(0,score-25);toast("Terug naar de start!")}
+  // landing near each course platform
+  if(player.position.y<.1){player.position.y=0;velocityY=0;grounded=true}
+  if(player.position.z<-69){score+=300;endRound("FINISH REACHED");return}
+  score=Math.max(score,Math.max(0,Math.floor(-player.position.z*2)));
+  camera.position.lerp(new THREE.Vector3(player.position.x,player.position.y+7,player.position.z+11),dt*3);
+  camera.lookAt(player.position.x,player.position.y,player.position.z-4);
  }
- const ast=objects.filter(o=>o.type==="asteroid"),bul=objects.filter(o=>o.type==="bullet");
- for(const a of ast){for(const b of bul){if(!b.dead&&!a.dead&&Math.hypot(a.x-b.x,a.y-b.y)<a.r+b.r){a.dead=true;b.dead=true;score+=20;for(let i=0;i<7;i++)particles.push({x:a.x,y:a.y,vx:rand(-80,80),vy:rand(-80,80),life:.4,color:"#7de6ff"});sound(780,.04)}}
- if(!a.dead&&Math.hypot(a.x-player.x,a.y-player.y)<a.r+player.r){a.dead=true;finishGame();return}}
- objects=objects.filter(o=>!o.dead&&o.y<H+50&&o.y>-70);
- score+=dt*3;
 }
-function drawSpace(){
- backgroundGradient("#080b26","#191b48");
- for(const o of objects)if(o.type==="star"){ctx.fillStyle="#ffffffbb";ctx.fillRect(o.x,o.y,o.r,o.r*2)}
- // distant planets
- ctx.fillStyle="#3b347e";ctx.beginPath();ctx.arc(W*.78,H*.23,45,0,7);ctx.fill();
- ctx.fillStyle="#5149a5";ctx.beginPath();ctx.arc(W*.76,H*.2,34,0,7);ctx.fill();
- for(const o of objects){
-  if(o.type==="asteroid"){ctx.save();ctx.translate(o.x,o.y);ctx.rotate(o.rot);ctx.fillStyle="#9299b8";ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,r=o.r*(.75+(i%3)*.12);ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.restore()}
-  if(o.type==="bullet"){ctx.fillStyle="#7de6ff";ctx.shadowColor="#39d5ff";ctx.shadowBlur=12;ctx.fillRect(o.x-2,o.y-9,4,16);ctx.shadowBlur=0}
- }
- // ship
- ctx.fillStyle="#3fbdff";ctx.beginPath();ctx.moveTo(player.x,player.y-24);ctx.lineTo(player.x-18,player.y+17);ctx.lineTo(player.x,player.y+9);ctx.lineTo(player.x+18,player.y+17);ctx.closePath();ctx.fill();
- ctx.fillStyle="#dffaff";ctx.beginPath();ctx.ellipse(player.x,player.y-3,5,10,0,0,7);ctx.fill();
- ctx.fillStyle="#ffad52";ctx.beginPath();ctx.moveTo(player.x-5,player.y+15);ctx.lineTo(player.x,player.y+30+Math.random()*4);ctx.lineTo(player.x+5,player.y+15);ctx.fill();
-}
-function initRacer(){
- player={x:W/2,y:H*.78,speed:0,lane:0};
- objects=[];gameSettings.roadOffset=0;gameSettings.lastSpawn=0;gameSettings.speed=260;
- gameText("DRIFT LEGENDS","Stay on the track and avoid traffic");
-}
-function updateRacer(dt){
- const steer=(keys["arrowleft"]||keys.a||touch.left?-1:0)+(keys["arrowright"]||keys.d||touch.right?1:0);
- player.x+=steer*330*dt;
- player.speed=clamp(player.speed+((keys["arrowup"]||keys.w)?240:-60)*dt,150,480);
- if(keys["arrowdown"]||keys.s)player.speed=Math.max(120,player.speed-350*dt);
- player.x=clamp(player.x,W*.15,W*.85);
- gameSettings.roadOffset=(gameSettings.roadOffset+player.speed*dt)%100;
- gameSettings.lastSpawn+=dt;
- if(gameSettings.lastSpawn>1.05){gameSettings.lastSpawn=0;const lane=rand(.25,.75);objects.push({x:W*lane,y:-70,w:36,h:60,passed:false,color:["#ff5b79","#a887ff","#ffe16b"][Math.floor(rand(0,3))]})}
- const roadL=W*.12,roadR=W*.88;
- if(player.x<roadL+10||player.x>roadR-10){player.speed=Math.max(120,player.speed-180*dt);score=Math.max(0,score-dt*5)}
- for(const o of objects){o.y+=player.speed*dt;
-  if(!o.passed&&Math.abs(o.x-player.x)<40&&Math.abs(o.y-(H*.78))<45){finishGame();return}
-  if(o.y>H+50&&!o.passed){o.passed=true;score+=15}
- }
- objects=objects.filter(o=>o.y<H+100);
- score+=dt*player.speed*.025;
-}
-function drawRacer(){
- backgroundGradient("#171e39","#333050");
- ctx.fillStyle="#235c46";ctx.fillRect(0,0,W,H);
- const left=W*.12,right=W*.88;
- ctx.fillStyle="#36394a";ctx.fillRect(left,0,right-left,H);
- ctx.fillStyle="#e8d6a5";ctx.fillRect(left,0,5,H);ctx.fillRect(right-5,0,5,H);
- for(let y=-100;y<H+100;y+=100){const yy=(y+gameSettings.roadOffset)% (H+100);ctx.fillStyle="#e9e7e2";ctx.fillRect(W*.5-3,yy,6,47)}
- // scenery
- for(let i=0;i<10;i++){const x=i%2?W*.05:W*.93,y=(i*91+elapsed*130)%(H+50);ctx.fillStyle="#4aaf7b";ctx.beginPath();ctx.arc(x,y,14,0,7);ctx.fill()}
- for(const o of objects){
-  roundedRect(o.x-o.w/2,o.y-o.h/2,o.w,o.h,8,o.color);
-  roundedRect(o.x-o.w/2+5,o.y-o.h/2+8,o.w-10,17,4,"#a9e9ff");
-  ctx.fillStyle="#181c2d";ctx.fillRect(o.x-o.w/2-3,o.y+o.h/2-10,9,15);ctx.fillRect(o.x+o.w/2-6,o.y+o.h/2-10,9,15);
- }
- const x=player.x,y=H*.78;
- ctx.save();ctx.translate(x,y);ctx.rotate((x-W/2)/(W*.36)*-.08);
- roundedRect(-23,-37,46,72,12,"#50d8ff");
- roundedRect(-16,-28,32,21,6,"#dffaff");
- roundedRect(-17,12,34,14,4,"#252a44");
- ctx.fillStyle="#11182c";ctx.fillRect(-27,20,12,19);ctx.fillRect(15,20,12,19);
- ctx.restore();
- ctx.fillStyle="#fff";ctx.font="bold 13px Arial";ctx.textAlign="center";ctx.fillText("SPEED "+Math.round(player.speed),W/2,25);
-}
-function drawParticles(dt){
- for(const p of particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;ctx.globalAlpha=Math.max(0,p.life/.6);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,4,4)}
- ctx.globalAlpha=1;particles=particles.filter(p=>p.life>0);
-}
-function updateGame(dt){
- if(!currentGame||gamePaused||gameOver)return;
- elapsed+=dt;
- if(currentGame.id==="arena")score+=0;
- if(currentGame.id==="runner")updateRunner(dt);
- if(currentGame.id==="space")updateSpace(dt);
- if(currentGame.id==="racer")updateRacer(dt);
- drawParticles(dt);updateHud();
-}
-function drawGame(dt){
- if(!currentGame)return;
- if(currentGame.id==="arena")drawArena(dt);
- if(currentGame.id==="runner")drawRunner();
- if(currentGame.id==="space")drawSpace();
- if(currentGame.id==="racer")drawRacer();
- drawParticles(dt);
-}
-function frame(now){
- requestAnimationFrame(frame);
- const dt=Math.min(.04,(now-lastTime)/1000||0);lastTime=now;
- if(currentGame&&!gamePaused&&!gameOver){
-  elapsed+=dt;
-  if(currentGame.id==="runner")updateRunner(dt);
-  if(currentGame.id==="space")updateSpace(dt);
-  if(currentGame.id==="racer")updateRacer(dt);
-  if(currentGame.id==="arena")score=score;
+function loop(){
+ raf=requestAnimationFrame(loop);
+ if(!renderer||!scene||!camera)return;
+ const dt=Math.min(clock.getDelta(),.04);elapsed+=dt;
+ if(playing&&!finished){
+  movement(dt);
+  for(const o of objects){
+   if(o.userData?.moving)o.position.x=Math.sin(elapsed*1.5+o.userData.phase)*4;
+   if(o.userData?.movingPlatform)o.position.x=o.userData.baseX+Math.sin(elapsed*1.7+o.userData.phase)*2;
+  }
+  if(active.id==="battle"&&keys[" "]){
+   // Keyboard firing also awards a small amount, with a cooldown.
+   spawnTimer-=dt;
+   if(spawnTimer<=0){
+    spawnTimer=.4;
+    const t=targets.find(t=>t.visible);
+    if(t){t.visible=false;score+=50}
+   }
+  }
+  if(active.id==="racing"&&score>0&&score%1000<10){/* score remains continuous */}
   updateHud();
  }
- if(currentGame){drawGame(dt)}
+ renderer.render(scene,camera);
 }
-requestAnimationFrame(frame);
-
-// Ensure mission progress is refreshed after each round and on load.
-const originalAddProgress=addProgress;
-addProgress=function(data){originalAddProgress(data);checkMissions()};
-refresh();
+viewport.addEventListener("pointerdown",handleClick);
+$("overlay").addEventListener("click",e=>{
+ if(e.target.id==="again"){start(active.id)}
+});
 </script>
 </body>
 </html>
